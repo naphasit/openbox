@@ -10,6 +10,7 @@ pub static ASSETS: OnceLock<Assets> = OnceLock::new();
 
 impl Assets {
     pub async fn init() {
+        info!("Init assets");
         let assets = Assets {
             texture: Texture2D::empty(),
         };
@@ -21,6 +22,7 @@ impl Assets {
 
     pub fn get() -> &'static Assets {
         ASSETS.get().unwrap_or_else(|| {
+            trace!("Get assets");
             panic!("Assets not initialized yet");
         })
     }
