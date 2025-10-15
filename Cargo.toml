@@ -1,7 +1,7 @@
 [workspace]
 resolver = "3"
-members = []
-default-members = []
+members = ["game"]
+default-members = ["game"]
 
 [workspace.package]
 edition = "2024"

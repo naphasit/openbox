@@ -1,0 +1,8 @@
+[package]
+name = "game"
+version = "0.0.0"
+description = "Main binary crate."
+edition.workspace = true
+
+[dependencies]
+macroquad = "0.4.14"
