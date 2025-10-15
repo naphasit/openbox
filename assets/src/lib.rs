@@ -1,4 +1,30 @@
+use std::sync::OnceLock;
+
 use macroquad::prelude::*;
+
+pub struct Assets {
+    pub texture: Texture2D,
+}
+
+pub static ASSETS: OnceLock<Assets> = OnceLock::new();
+
+impl Assets {
+    pub async fn init() {
+        let assets = Assets {
+            texture: Texture2D::empty(),
+        };
+
+        ASSETS
+            .set(assets)
+            .unwrap_or_else(|_| error!("Can't init assets"));
+    }
+
+    pub fn get() -> &'static Assets {
+        ASSETS.get().unwrap_or_else(|| {
+            panic!("Assets not initialized yet");
+        })
+    }
+}
 
 pub enum Texture {
     Dirt,
