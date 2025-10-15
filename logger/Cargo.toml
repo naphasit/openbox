@@ -1,0 +1,10 @@
+[package]
+name = "logger"
+version = "0.1.0"
+description = "Logger library crate."
+edition.workspace = true
+
+[dependencies]
+chrono = "0.4.42"
+colored = "3.0.0"
+log = { version = "0.4.28", features = ["std"] }
