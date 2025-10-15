@@ -1,4 +1,4 @@
-use assets::Texture;
+use assets::textures::Texture;
 use macroquad::prelude::*;
 
 #[test]
