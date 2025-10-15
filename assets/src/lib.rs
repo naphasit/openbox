@@ -1,6 +1,6 @@
-use std::sync::OnceLock;
-
 use macroquad::prelude::*;
+use std::sync::OnceLock;
+pub mod textures;
 
 pub struct Assets {
     pub texture: Texture2D,
@@ -25,17 +25,5 @@ impl Assets {
             trace!("Get assets");
             panic!("Assets not initialized yet");
         })
-    }
-}
-
-pub enum Texture {
-    Dirt,
-}
-
-impl Into<Rect> for Texture {
-    fn into(self) -> Rect {
-        match self {
-            Texture::Dirt => Rect::new(0.0, 0.0, 32.0, 32.0),
-        }
     }
 }
