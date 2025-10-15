@@ -1,0 +1,7 @@
+[package]
+name = "assets"
+description = "Assets loader/utils library crate."
+edition.workspace = true
+
+[dependencies]
+macroquad = "0.4.14"
