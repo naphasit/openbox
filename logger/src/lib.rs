@@ -1,6 +1,7 @@
 use chrono::Utc;
 use colored::{Color, Colorize};
 use log::{Level, LevelFilter, Log, Metadata, Record, info};
+use std::env;
 use std::fs::{File, OpenOptions};
 use std::io::Write;
 use std::path::Path;
@@ -15,6 +16,16 @@ pub struct Logger {
 
 impl Logger {
     pub fn init() {
+        let log_level_env = env::var("LOG_LEVEL").unwrap_or("INFO".to_string());
+        let log_level = match log_level_env.as_str() {
+            "OFF" => LevelFilter::Off,
+            "ERROR" => LevelFilter::Error,
+            "WARN" => LevelFilter::Warn,
+            "INFO" => LevelFilter::Info,
+            "DEBUG" => LevelFilter::Debug,
+            "TRACE" => LevelFilter::Trace,
+            _ => LevelFilter::Info,
+        };
         let date = Utc::now().format("%Y-%m-%d_%H:%M:%S");
         let log_file_name = format!("{date}.log");
         let log_path = Path::new(LOGS_PATH).join(log_file_name);
@@ -30,7 +41,7 @@ impl Logger {
         };
 
         log::set_boxed_logger(Box::new(logger))
-            .map(|()| log::set_max_level(LevelFilter::Info))
+            .map(|()| log::set_max_level(log_level))
             .expect("Failed to set logger");
     }
 }
