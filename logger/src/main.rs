@@ -43,10 +43,8 @@ impl Log for Logger {
     }
 
     fn log(&self, record: &Record) {
-        let time = Utc::now()
-            .format("%Y-%m-%d %H:%M:%S")
-            .to_string()
-            .bright_black();
+        let time = Utc::now().format("%Y-%m-%d %H:%M:%S").to_string();
+        let time_colored = time.bright_black();
         let level_color = match record.level() {
             Level::Error => Color::Red,
             Level::Warn => Color::Yellow,
@@ -54,13 +52,14 @@ impl Log for Logger {
             Level::Debug => Color::Magenta,
             Level::Trace => Color::BrightCyan,
         };
-        let level = record.level().as_str().color(level_color);
+        let level = record.level();
+        let level_colored = record.level().as_str().color(level_color);
         let args = record.args();
 
         let mut file = self.file.lock().unwrap();
 
         if self.enabled(record.metadata()) {
-            println!("[{}] [{:<5}]: {}", time, level, args);
+            println!("[{}] [{:<5}]: {}", time_colored, level_colored, args);
             writeln!(file, "[{}] [{:<5}]: {}", time, level, args).unwrap();
         }
     }
