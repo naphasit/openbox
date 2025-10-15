@@ -1,11 +1,13 @@
 use chrono::Utc;
 use colored::{Color, Colorize};
-use log::{Level, LevelFilter, Log, Metadata, Record, info};
-use std::env;
-use std::fs::{File, OpenOptions};
-use std::io::Write;
-use std::path::Path;
-use std::sync::Mutex;
+use log::{Level, LevelFilter, Log, Metadata, Record};
+use std::{
+    env,
+    fs::{File, OpenOptions},
+    io::Write,
+    path::Path,
+    sync::Mutex,
+};
 
 // TODO: change to real path
 const LOGS_PATH: &str = "/home/naphasitng/.local/share/openbox/logs";
