@@ -19,8 +19,6 @@ impl Logger {
         let log_file_name = format!("{date}.log");
         let log_path = Path::new(LOGS_PATH).join(log_file_name);
 
-        println!("{:?}", log_path);
-
         let file = OpenOptions::new()
             .create(true)
             .append(true)
@@ -65,9 +63,4 @@ impl Log for Logger {
     }
 
     fn flush(&self) {}
-}
-
-fn main() {
-    Logger::init();
-    info!("HI");
 }
