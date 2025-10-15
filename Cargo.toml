@@ -1,7 +1,10 @@
 [workspace]
 resolver = "3"
-members = ["game", "logger"]
+members = ["assets", "game", "logger"]
 default-members = ["game"]
 
 [workspace.package]
 edition = "2024"
+
+[workspace.dependencies]
+logger = { path = "./logger" }
