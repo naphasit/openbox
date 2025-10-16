@@ -1,6 +1,7 @@
 use chrono::Utc;
 use colored::{Color, Colorize};
 use log::{Level, LevelFilter, Log, Metadata, Record};
+pub use log::{debug, error, info, trace, warn};
 use std::{
     env,
     fs::{File, OpenOptions},
