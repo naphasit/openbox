@@ -1,3 +1,4 @@
+use logger::{error, info, trace};
 use macroquad::prelude::*;
 use std::sync::OnceLock;
 pub mod textures;
