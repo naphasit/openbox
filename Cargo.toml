@@ -8,3 +8,4 @@ edition = "2024"
 
 [workspace.dependencies]
 logger = { path = "./logger" }
+macroquad = "0.4.14"
