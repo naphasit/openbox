@@ -73,7 +73,7 @@ impl Log for Logger {
             Level::Debug => Color::Magenta,
             Level::Trace => Color::BrightCyan,
         };
-        let level_colored = record.level().as_str().color(level_color);
+        let level_colored = level.as_str().color(level_color);
 
         //* ===== Log Source =====
         let source = record.target();
