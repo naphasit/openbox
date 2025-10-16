@@ -75,6 +75,10 @@ impl Log for Logger {
         };
         let level_colored = record.level().as_str().color(level_color);
 
+        //* ===== Log Source =====
+        let source = record.target();
+        let source_colored = source.bright_black();
+
         //* ===== Log Contents =====
         let contents = record.args();
 
@@ -82,8 +86,11 @@ impl Log for Logger {
         let mut file = self.file.lock().unwrap();
 
         if self.enabled(record.metadata()) {
-            println!("[{}] [{:<5}]: {}", date_colored, level_colored, contents);
-            writeln!(file, "[{}] [{:<5}]: {}", date, level, contents).unwrap();
+            println!(
+                "[{}] [{}] [{:<5}]: {}",
+                date_colored, source_colored, level_colored, contents
+            );
+            writeln!(file, "[{}] [{}] [{:<5}]: {}", date, source, level, contents).unwrap();
         }
     }
 
