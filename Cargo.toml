@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["assets", "game", "logger"]
+members = ["assets", "ecs", "game", "logger"]
 default-members = ["game"]
 
 [workspace.package]
