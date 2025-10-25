@@ -16,7 +16,7 @@ impl Components {
         self.0.get_mut(&TypeId::of::<T>())
     }
 
-    pub fn get_all<T: 'static>(&self) -> Vec<(&Entity, Option<&T>)> {
+    fn get_all<T: 'static>(&self) -> Vec<(&Entity, Option<&T>)> {
         let mut result = Vec::new();
 
         if let Some(components) = self.get::<T>() {
@@ -29,7 +29,7 @@ impl Components {
         result
     }
 
-    pub fn get_all_mut<T: 'static>(&mut self) -> Vec<(&Entity, Option<&mut T>)> {
+    fn get_all_mut<T: 'static>(&mut self) -> Vec<(&Entity, Option<&mut T>)> {
         let mut result = Vec::new();
 
         if let Some(components) = self.get_mut::<T>() {
