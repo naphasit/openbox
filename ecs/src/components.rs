@@ -42,6 +42,20 @@ impl Components {
         result
     }
 
+    pub fn query<T: 'static>(&self, mut filter: impl FnMut(&T) -> bool) -> Vec<Entity> {
+        let mut result = Vec::new();
+
+        for (entity, component) in self.get_all::<T>() {
+            if let Some(component) = component {
+                if filter(component) {
+                    result.push(*entity);
+                }
+            }
+        }
+
+        result
+    }
+
     pub fn get_by_entity<T: 'static>(&self, entity: Entity) -> Option<&T> {
         self.get::<T>()?.get(&entity)?.downcast_ref::<T>()
     }
