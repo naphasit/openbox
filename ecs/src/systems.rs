@@ -1,4 +1,5 @@
 use crate::World;
+use macroquad::window::next_frame;
 
 pub struct Systems {
     startup: Vec<Box<dyn FnMut(&mut World)>>,
@@ -13,7 +14,7 @@ impl Systems {
         }
     }
 
-    pub fn run(&mut self, world: &mut World) {
+    pub async fn run(&mut self, world: &mut World) {
         //* ===== Startup =====
         for sys in self.startup.iter_mut() {
             sys(world);
@@ -24,6 +25,7 @@ impl Systems {
             for sys in self.update.iter_mut() {
                 sys(world);
             }
+            next_frame().await;
         }
     }
 
