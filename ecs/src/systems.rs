@@ -27,10 +27,14 @@ impl Systems {
         }
     }
 
-    pub fn add(&mut self, sys_type: SystemType, sys: Box<dyn FnMut(&mut World)>) -> &Self {
+    pub fn add<S>(&mut self, sys_type: SystemType, sys: S) -> &Self
+    where
+        S: FnMut(&mut World) + 'static,
+    {
+        let boxed_sys: Box<dyn FnMut(&mut World)> = Box::new(sys);
         match sys_type {
-            SystemType::Startup => self.startup.push(sys),
-            SystemType::Update => self.update.push(sys),
+            SystemType::Startup => self.startup.push(boxed_sys),
+            SystemType::Update => self.update.push(boxed_sys),
         }
         self
     }
