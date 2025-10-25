@@ -39,3 +39,21 @@ impl World {
         entity
     }
 }
+
+impl Components {
+    fn get<T: 'static>(&self) -> Option<&HashMap<Entity, Box<dyn Any>>> {
+        self.0.get(&TypeId::of::<T>())
+    }
+
+    fn get_mut<T: 'static>(&mut self) -> Option<&mut HashMap<Entity, Box<dyn Any>>> {
+        self.0.get_mut(&TypeId::of::<T>())
+    }
+
+    pub fn get_by_entity<T: 'static>(&self, entity: Entity) -> Option<&T> {
+        self.get::<T>()?.get(&entity)?.downcast_ref::<T>()
+    }
+
+    pub fn get_mut_by_entity<T: 'static>(&mut self, entity: Entity) -> Option<&mut T> {
+        self.get_mut::<T>()?.get_mut(&entity)?.downcast_mut::<T>()
+    }
+}
