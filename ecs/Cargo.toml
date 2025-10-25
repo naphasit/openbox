@@ -1,6 +1,9 @@
 [package]
 name = "ecs"
-version = "0.1.0"
+description = "ECS library crate."
 edition.workspace = true
 
 [dependencies]
+macroquad = { workspace = true }
+logger = { workspace = true }
+uuid = { version = "1.18.1", features = ["v4"] }
