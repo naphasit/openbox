@@ -16,6 +16,32 @@ impl Components {
         self.0.get_mut(&TypeId::of::<T>())
     }
 
+    pub fn get_all<T: 'static>(&self) -> Vec<(&Entity, Option<&T>)> {
+        let mut result = Vec::new();
+
+        if let Some(components) = self.get::<T>() {
+            for (entity, data) in components {
+                let component_ref = data.downcast_ref::<T>();
+                result.push((entity, component_ref));
+            }
+        }
+
+        result
+    }
+
+    pub fn get_all_mut<T: 'static>(&mut self) -> Vec<(&Entity, Option<&mut T>)> {
+        let mut result = Vec::new();
+
+        if let Some(components) = self.get_mut::<T>() {
+            for (entity, data) in components {
+                let component_ref = data.downcast_mut::<T>();
+                result.push((entity, component_ref));
+            }
+        }
+
+        result
+    }
+
     pub fn get_by_entity<T: 'static>(&self, entity: Entity) -> Option<&T> {
         self.get::<T>()?.get(&entity)?.downcast_ref::<T>()
     }
