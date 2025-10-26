@@ -39,4 +39,18 @@ impl World {
             component.remove(&uuid);
         }
     }
+
+    //# ===== Component Management =====
+    pub fn get<T: 'static>(&self, uuid: Uuid) -> Option<&T> {
+        self.components
+            .get(&TypeId::of::<T>())?
+            .get(&uuid)?
+            .downcast_ref::<T>()
+    }
+    pub fn get_mut<T: 'static>(&mut self, uuid: Uuid) -> Option<&mut T> {
+        self.components
+            .get_mut(&TypeId::of::<T>())?
+            .get_mut(&uuid)?
+            .downcast_mut::<T>()
+    }
 }
