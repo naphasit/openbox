@@ -1,0 +1,6 @@
+[package]
+name = "state"
+description = "State management library crate."
+edition.workspace = true
+
+[dependencies]
