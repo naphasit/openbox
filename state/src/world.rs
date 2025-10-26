@@ -19,24 +19,24 @@ impl World {
 
     pub fn spawn(&mut self, components: Vec<Box<dyn Any>>) -> Uuid {
         //* ===== Add Entity =====
-        let entity = Uuid::new_v4();
-        self.entities.push(entity);
+        let uuid = Uuid::new_v4();
+        self.entities.push(uuid);
 
         //* ===== Add Components =====
         for c in components {
             let type_id = (*c).type_id();
             let entry = self.components.entry(type_id).or_insert(HashMap::new());
 
-            entry.insert(entity, c);
+            entry.insert(uuid, c);
         }
 
         //* ===== Return =====
-        entity
+        uuid
     }
 
-    pub fn delete(&mut self, entity: Uuid) {
+    pub fn delete(&mut self, uuid: Uuid) {
         for (_, component) in &mut self.components {
-            component.remove(&entity);
+            component.remove(&uuid);
         }
     }
 }
