@@ -57,15 +57,23 @@ impl World {
     pub fn query<T: 'static>(&self, mut filter: impl FnMut(&T) -> bool) -> Vec<Uuid> {
         let mut result = Vec::new();
 
-        if let Some(components) = self.components.get(&TypeId::of::<T>()) {
-            for (entity, data) in components {
-                let component_ref = data.downcast_ref::<T>();
-                if let Some(component) = component_ref {
+        //$ --- Get Components ---
+        let type_id = &TypeId::of::<T>();
+
+        if let Some(components) = self.components.get(type_id) {
+            //$ --- Get Components ---
+            for (uuid, _) in components {
+                if let Some(component) = self.get(*uuid) {
+                    //$ --- Filter Component ---
                     if filter(component) {
-                        result.push(*entity);
+                        result.push(*uuid);
                     }
+                } else {
+                    // TODO: Add Logger
                 }
             }
+        } else {
+            // TODO: Add Logger
         }
 
         result
