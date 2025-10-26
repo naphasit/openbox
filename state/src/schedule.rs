@@ -28,4 +28,15 @@ impl Schedule {
             next_frame().await;
         }
     }
+
+    pub fn add_startup<T: FnMut(&mut World) + 'static>(&mut self, sys: T) -> &mut Self {
+        let boxed_sys = Box::new(sys);
+        self.startup.push(boxed_sys);
+        self
+    }
+    pub fn add_update<T: FnMut(&mut World) + 'static>(&mut self, sys: T) -> &mut Self {
+        let boxed_sys = Box::new(sys);
+        self.update.push(boxed_sys);
+        self
+    }
 }
