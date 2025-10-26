@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["state"]
+members = ["logger", "state"]
 default-members = []
 
 [workspace.package]
@@ -8,5 +8,6 @@ description = "A survival sandbox game driven by the open-source community."
 edition = "2024"
 
 [workspace.dependencies]
-state = { path = "../state" }
+state = { path = "./state" }
+logger = { path = "./logger" }
 macroquad = "0.4.14"
