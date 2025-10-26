@@ -14,13 +14,14 @@ impl Schedule {
         }
     }
 
+    //# ===== Run System =====
     pub async fn run(&mut self, world: &mut World) {
-        //* ===== Startup =====
+        //$ --- Startup ---
         for sys in self.startup.iter_mut() {
             sys(world);
         }
 
-        //* ===== Update =====
+        //$ --- Update ---
         loop {
             for sys in self.update.iter_mut() {
                 sys(world);
@@ -29,6 +30,7 @@ impl Schedule {
         }
     }
 
+    //# ===== Add System =====
     pub fn add_startup<T: FnMut(&mut World) + 'static>(&mut self, sys: T) -> &mut Self {
         let boxed_sys = Box::new(sys);
         self.startup.push(boxed_sys);
