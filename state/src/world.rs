@@ -1,3 +1,4 @@
+use logger::error;
 use std::{
     any::{Any, TypeId},
     collections::HashMap,
@@ -44,16 +45,32 @@ impl World {
 
     //# ===== Component Management =====
     pub fn get<T: 'static>(&self, uuid: Uuid) -> Option<&T> {
-        self.components
+        let type_id = &TypeId::of::<T>();
+        let component = self
+            .components
             .get(&TypeId::of::<T>())?
             .get(&uuid)?
-            .downcast_ref::<T>()
+            .downcast_ref::<T>();
+
+        if component.is_none() {
+            error!("Component {:?} missing in {}", type_id, uuid);
+        }
+
+        component
     }
     pub fn get_mut<T: 'static>(&mut self, uuid: Uuid) -> Option<&mut T> {
-        self.components
+        let type_id = &TypeId::of::<T>();
+        let component = self
+            .components
             .get_mut(&TypeId::of::<T>())?
             .get_mut(&uuid)?
-            .downcast_mut::<T>()
+            .downcast_mut::<T>();
+
+        if component.is_none() {
+            error!("Component {:?} missing in {}", type_id, uuid);
+        }
+
+        component
     }
 
     pub fn query<T: 'static>(&self, mut filter: impl FnMut(&T) -> bool) -> Vec<Uuid> {
@@ -70,12 +87,10 @@ impl World {
                     if filter(component) {
                         result.push(*uuid);
                     }
-                } else {
-                    // TODO: Add Logger
                 }
             }
         } else {
-            // TODO: Add Logger
+            error!("Missing component {:?}", type_id);
         }
 
         result
