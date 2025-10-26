@@ -10,6 +10,13 @@ pub struct World {
 }
 
 impl World {
+    pub fn new() -> Self {
+        Self {
+            entities: Vec::new(),
+            components: HashMap::new(),
+        }
+    }
+
     pub fn spawn(&mut self, components: Vec<Box<dyn Any>>) -> Uuid {
         //* ===== Add Entity =====
         let entity = Uuid::new_v4();
