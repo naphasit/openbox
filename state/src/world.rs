@@ -33,4 +33,10 @@ impl World {
         //* ===== Return =====
         entity
     }
+
+    pub fn delete(&mut self, entity: Uuid) {
+        for (_, component) in &mut self.components {
+            component.remove(&entity);
+        }
+    }
 }
