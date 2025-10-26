@@ -38,6 +38,8 @@ impl World {
         for (_, component) in &mut self.components {
             component.remove(&uuid);
         }
+
+        self.entities.retain(|&e| e != uuid);
     }
 
     //# ===== Component Management =====
