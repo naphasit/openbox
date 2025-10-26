@@ -4,4 +4,6 @@ description = "Logger library crate."
 edition.workspace = true
 
 [dependencies]
-log = "0.4.28"
+log = { version = "0.4.28", features = ["std"] }
+chrono = "0.4.42"
+colored = "3.0.0"
