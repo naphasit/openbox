@@ -4,3 +4,4 @@ description = "State management library crate."
 edition.workspace = true
 
 [dependencies]
+uuid = { version = "1.18.1", features = ["v4"] }
