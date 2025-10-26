@@ -1,0 +1,10 @@
+[workspace]
+resolver = "3"
+members = []
+default-members = []
+
+[workspace.package]
+description = "A survival sandbox game driven by the open-source community."
+edition = "2024"
+
+[workspace.dependencies]
