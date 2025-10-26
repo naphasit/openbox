@@ -9,3 +9,4 @@ edition = "2024"
 
 [workspace.dependencies]
 state = { path = "../state" }
+macroquad = "0.4.14"
