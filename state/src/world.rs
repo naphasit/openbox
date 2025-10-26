@@ -53,4 +53,21 @@ impl World {
             .get_mut(&uuid)?
             .downcast_mut::<T>()
     }
+
+    pub fn query<T: 'static>(&self, mut filter: impl FnMut(&T) -> bool) -> Vec<Uuid> {
+        let mut result = Vec::new();
+
+        if let Some(components) = self.components.get(&TypeId::of::<T>()) {
+            for (entity, data) in components {
+                let component_ref = data.downcast_ref::<T>();
+                if let Some(component) = component_ref {
+                    if filter(component) {
+                        result.push(*entity);
+                    }
+                }
+            }
+        }
+
+        result
+    }
 }
