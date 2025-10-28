@@ -98,11 +98,11 @@ impl World {
         result
     }
 
+    //# ===== Resource Management =====
     pub fn insert_resource<T: 'static>(&mut self, resource: Option<T>) {
         let type_id = TypeId::of::<T>();
         self.resource.insert(type_id, Box::new(resource));
     }
-
     pub fn get_resource<T: 'static>(&self) -> Option<&T> {
         let type_id = TypeId::of::<T>();
 
@@ -114,7 +114,6 @@ impl World {
 
         resource
     }
-
     pub fn get_resource_mut<T: 'static>(&mut self) -> Option<&mut T> {
         let type_id = TypeId::of::<T>();
 
