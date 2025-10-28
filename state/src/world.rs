@@ -8,6 +8,7 @@ use uuid::Uuid;
 pub struct World {
     entities: Vec<Uuid>,
     components: HashMap<TypeId, HashMap<Uuid, Box<dyn Any>>>,
+    resource: HashMap<TypeId, Box<dyn Any>>,
 }
 
 impl World {
@@ -15,6 +16,7 @@ impl World {
         Self {
             entities: Vec::new(),
             components: HashMap::new(),
+            resource: HashMap::new(),
         }
     }
 
