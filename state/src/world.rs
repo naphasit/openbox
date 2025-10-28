@@ -8,6 +8,7 @@ use uuid::Uuid;
 pub struct World {
     entities: Vec<Uuid>,
     components: HashMap<TypeId, HashMap<Uuid, Box<dyn Any>>>,
+    resource: HashMap<TypeId, Box<dyn Any>>,
 }
 
 impl World {
@@ -15,6 +16,7 @@ impl World {
         Self {
             entities: Vec::new(),
             components: HashMap::new(),
+            resource: HashMap::new(),
         }
     }
 
@@ -94,5 +96,33 @@ impl World {
         }
 
         result
+    }
+
+    //# ===== Resource Management =====
+    pub fn insert_resource<T: 'static>(&mut self, resource: Option<T>) {
+        let type_id = TypeId::of::<T>();
+        self.resource.insert(type_id, Box::new(resource));
+    }
+    pub fn get_resource<T: 'static>(&self) -> Option<&T> {
+        let type_id = TypeId::of::<T>();
+
+        let resource = self.resource.get(&type_id)?.downcast_ref::<T>();
+
+        if resource.is_none() {
+            error!("Missing resource {:?}", type_id);
+        }
+
+        resource
+    }
+    pub fn get_resource_mut<T: 'static>(&mut self) -> Option<&mut T> {
+        let type_id = TypeId::of::<T>();
+
+        let resource = self.resource.get_mut(&type_id)?.downcast_mut::<T>();
+
+        if resource.is_none() {
+            error!("Missing resource {:?}", type_id);
+        }
+
+        resource
     }
 }
