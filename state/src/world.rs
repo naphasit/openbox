@@ -97,4 +97,9 @@ impl World {
 
         result
     }
+
+    pub fn insert_resource<T: 'static>(&mut self, resource: T) {
+        let type_id = TypeId::of::<T>();
+        self.resource.insert(type_id, Box::new(resource));
+    }
 }
