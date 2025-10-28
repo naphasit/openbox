@@ -114,4 +114,16 @@ impl World {
 
         resource
     }
+
+    pub fn get_resource_mut<T: 'static>(&mut self) -> Option<&mut T> {
+        let type_id = TypeId::of::<T>();
+
+        let resource = self.resource.get_mut(&type_id)?.downcast_mut::<T>();
+
+        if resource.is_none() {
+            error!("Missing resource {:?}", type_id);
+        }
+
+        resource
+    }
 }
