@@ -98,8 +98,20 @@ impl World {
         result
     }
 
-    pub fn insert_resource<T: 'static>(&mut self, resource: T) {
+    pub fn insert_resource<T: 'static>(&mut self, resource: Option<T>) {
         let type_id = TypeId::of::<T>();
         self.resource.insert(type_id, Box::new(resource));
+    }
+
+    pub fn get_resource<T: 'static>(&self) -> Option<&T> {
+        let type_id = TypeId::of::<T>();
+
+        let resource = self.resource.get(&type_id)?.downcast_ref::<T>();
+
+        if resource.is_none() {
+            error!("Missing resource {:?}", type_id);
+        }
+
+        resource
     }
 }
